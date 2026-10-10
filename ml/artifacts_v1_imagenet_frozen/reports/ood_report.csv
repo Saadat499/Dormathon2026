@@ -1,0 +1,12 @@
+category,role,n,flagged_rate,flag_maha,flag_probe,median_maha
+NIH test (real chest X-rays),should NOT be flagged,5558,0.006297229219143577,0.0053976250449802084,0.0012594458438287153,118.67040252685547
+CheXpert external (new dataset),"drift signal, not an error",15000,0.06886666666666667,0.06793333333333333,0.005066666666666666,196.39828491210938
+held-out rotated_90,should be flagged,150,0.9933333333333333,0.6266666666666667,0.9933333333333333,320.68951416015625
+held-out rotated_180,should be flagged,150,1.0,0.7066666666666667,1.0,325.242431640625
+held-out rotated_270,should be flagged,150,1.0,0.6533333333333333,1.0,316.1722106933594
+held-out flipped_vertical,should be flagged,150,1.0,0.6666666666666666,1.0,322.9878234863281
+held-out inverted,should be flagged,150,1.0,1.0,1.0,446.31292724609375
+held-out heavy_noise,should be flagged,150,1.0,1.0,1.0,1045.721923828125
+held-out heavy_blur,should be flagged,150,1.0,1.0,1.0,733.4945068359375
+held-out low_contrast,should be flagged,150,1.0,0.05333333333333334,1.0,205.23434448242188
+synthetic non-chest (held-out),should be flagged,100,1.0,1.0,1.0,1387.217041015625

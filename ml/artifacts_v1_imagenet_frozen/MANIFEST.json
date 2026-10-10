@@ -1,0 +1,50 @@
+{
+  "model_version": "partA-0.1.0+8d12efa246",
+  "frozen_at": "2026-10-10T16:49:21+00:00",
+  "backbone": "densenet121-onnx",
+  "policy": {
+    "findings": [
+      "atelectasis",
+      "cardiomegaly",
+      "consolidation",
+      "edema",
+      "effusion",
+      "pneumonia",
+      "pneumothorax"
+    ],
+    "urgent": [
+      "pneumothorax",
+      "effusion",
+      "edema",
+      "consolidation",
+      "pneumonia"
+    ],
+    "target_sens_raise": 0.9,
+    "target_sens_unsure": 0.97,
+    "t_raise": 0.046855284692961505,
+    "t_unsure": 0.028617455329119332,
+    "temperature": {},
+    "composite": "max_of_urgent_probabilities",
+    "status": "PROVISIONAL: fitted by Part A on NIH validation. Urgent list needs clinician review."
+  },
+  "deploy_files": {
+    "backbone.json": "2639dc4b0a679c1d47213a1f1e18e1093482f56a3fb54c774815cc58ae42ba1a",
+    "head.npz": "bd5bdd2a68c4c6dbb3e7983bcb610aea861910aa3b9f7e0002fd4d05f135c23f",
+    "policy.json": "d029a092ff46d8d378e39927dca1c77fa8da6e9027ff2146c20730df0a28f1fc",
+    "ood.joblib": "d44a48a35a4e3c5e10ba5461df5a0bad8a7ac7481e3c40694e349a628a937c9b",
+    "backbone_densenet121-onnx.onnx": "3cfeedd40a0bef074eb9650a5c988c7e7c4c43b1ad1127dd33dbe6f72887c34c"
+  },
+  "demo_files": {
+    "predictions/demo_contract.jsonl": "3d009d26be2c44a4ebc526aa31c6822e68d637fc0bb68cdf3b6cf845bcca14cc",
+    "predictions/demo_manifest.csv": "012d6bc2efa2daca6ca638a20f9f58a31a22297f8910285e5affb2326d46a3e1"
+  },
+  "demo_studies": 81,
+  "libraries": {
+    "python": "3.13.7",
+    "numpy": "2.3.4",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.7.2",
+    "pillow": "12.0.0",
+    "onnxruntime": "1.24.4"
+  }
+}

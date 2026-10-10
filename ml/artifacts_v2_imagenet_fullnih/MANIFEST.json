@@ -1,0 +1,64 @@
+{
+  "model_version": "partA-0.1.0+4ca280b3cd",
+  "frozen_at": "2026-10-10T18:02:44+00:00",
+  "backbone": "densenet121-onnx",
+  "policy": {
+    "findings": [
+      "atelectasis",
+      "cardiomegaly",
+      "consolidation",
+      "edema",
+      "effusion",
+      "pneumonia",
+      "pneumothorax"
+    ],
+    "urgent": [
+      "pneumothorax",
+      "effusion",
+      "edema",
+      "consolidation",
+      "pneumonia"
+    ],
+    "mode": "budget",
+    "raise_budget": 0.2,
+    "unsure_budget": 0.1,
+    "min_sensitivity": 0.6,
+    "target_sens_raise": 0.9,
+    "target_sens_unsure": 0.97,
+    "t_raise": 0.22350963046371491,
+    "t_unsure": 0.1494789937510206,
+    "fitted": {
+      "on": "NIH validation",
+      "raised_share": 0.20007054051670928,
+      "raised_sensitivity": 0.47464239271781533,
+      "raised_ppv": 0.4825914499779639,
+      "raised_or_unsure_share": 0.29997354730623405,
+      "raised_or_unsure_sensitivity": 0.6536627654963155,
+      "prevalence": 0.2034212150604003,
+      "head": "2d8c24a53f06"
+    },
+    "temperature": {},
+    "composite": "max_of_urgent_probabilities",
+    "status": "PROVISIONAL: fitted by Part A on NIH validation. Urgent list needs clinician review."
+  },
+  "deploy_files": {
+    "backbone.json": "2639dc4b0a679c1d47213a1f1e18e1093482f56a3fb54c774815cc58ae42ba1a",
+    "head.npz": "2d8c24a53f06e910044b890793ebe351fe8c3879e309725170237750a452d6f6",
+    "policy.json": "02cb9e0b25e2dd4183f13f6db00804e86c7123c5e06c695051610e531b665425",
+    "ood.joblib": "a295167eb76fda9c9754541201c8cb5cdaabe503a955aa774323088da3d7b812",
+    "backbone_densenet121-onnx.onnx": "3cfeedd40a0bef074eb9650a5c988c7e7c4c43b1ad1127dd33dbe6f72887c34c"
+  },
+  "demo_files": {
+    "predictions/demo_contract.jsonl": "4da0f280d36adf05d87e1cd6697d61814922202102c77f04c4c200b18307bfb5",
+    "predictions/demo_manifest.csv": "a69b257e7f38b16ce449cdb7ac0e1739f2c86e1d1ac941ac1656b056e3db1201"
+  },
+  "demo_studies": 81,
+  "libraries": {
+    "python": "3.13.7",
+    "numpy": "2.3.4",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.7.2",
+    "pillow": "12.0.0",
+    "onnxruntime": "1.24.4"
+  }
+}

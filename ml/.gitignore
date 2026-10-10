@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+artifacts/
+artifacts_*/features/
+artifacts_*/subsets/
+artifacts_*/predictions/
+artifacts_*/demo_images/
+artifacts_*/demo_ood/
+artifacts_*/heatmaps*/
+artifacts_*/paths.json
+artifacts_*/reports/where_it_fails.csv
+artifacts_*/reports/heatmap_sheet.png

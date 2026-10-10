@@ -1,0 +1,9 @@
+artifacts_folder,model_version,sample,role,n_site,domain_auroc,ood_flag_rate,median_ood_score
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,NIH test (same source),"reference value, expect ~0.5",50,0.5072,0.02,127.79034423828125
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,NIH test (same source),"reference value, expect ~0.5",200,0.499675,0.005,121.89360809326172
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,"NIH test, AP views only (pseudo-site)","same source, different mix",50,0.712,0.0,136.64471435546875
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,"NIH test, AP views only (pseudo-site)","same source, different mix",200,0.726425,0.01,127.10638427734375
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,"NIH test, PA views only (pseudo-site)","same source, different mix",50,0.8059999999999999,0.0,112.12088775634766
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,"NIH test, PA views only (pseudo-site)","same source, different mix",200,0.711425,0.005,113.45018005371094
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,CheXpert external (other hospital),should be high,50,0.9944000000000001,0.06,192.57550048828125
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,CheXpert external (other hospital),should be high,200,0.999925,0.095,192.538330078125

@@ -1,0 +1,4 @@
+artifacts_folder,model_version,images,n,any_urgent_auroc,mean_score
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,original,3000,0.8098721066265288,0.12906658841098284
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,jpeg,3000,0.8039697933826636,0.14165737467418593
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,resize_jpeg,3000,0.8029341606050847,0.1313944475556399

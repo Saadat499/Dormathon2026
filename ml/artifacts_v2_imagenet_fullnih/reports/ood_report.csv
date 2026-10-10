@@ -1,0 +1,12 @@
+artifacts_folder,model_version,category,role,n,flagged_rate,flag_maha,flag_probe,median_maha
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,NIH test (real chest X-rays),should NOT be flagged,21845,0.005722133211261158,0.0050354772259098195,0.0016479743648432135,120.73309326171875
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,CheXpert external (new dataset),"drift signal, not an error",15000,0.0674,0.06633333333333333,0.0056,197.15988159179688
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,held-out rotated_90,should be flagged,150,1.0,0.7266666666666667,1.0,325.23199462890625
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,held-out rotated_180,should be flagged,150,1.0,0.6866666666666666,1.0,329.0426330566406
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,held-out rotated_270,should be flagged,150,1.0,0.66,1.0,321.0958251953125
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,held-out flipped_vertical,should be flagged,150,1.0,0.7266666666666667,0.9933333333333333,332.8564453125
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,held-out inverted,should be flagged,150,1.0,0.9933333333333333,1.0,466.784912109375
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,held-out heavy_noise,should be flagged,150,1.0,1.0,1.0,1183.033203125
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,held-out heavy_blur,should be flagged,150,1.0,1.0,1.0,699.6131591796875
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,held-out low_contrast,should be flagged,150,0.9933333333333333,0.08666666666666667,0.9933333333333333,228.31202697753906
+artifacts_v2_imagenet_fullnih,partA-0.1.0+4ca280b3cd,synthetic non-chest (held-out),should be flagged,100,1.0,1.0,1.0,1466.859130859375

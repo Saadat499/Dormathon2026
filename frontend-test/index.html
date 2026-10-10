@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChestTriage backend check</title>
+</head>
+<body>
+<h1>ChestTriage backend check</h1>
+<pre id="out">loading...</pre>
+<script>
+fetch("https://chesttriage-api.onrender.com/health")
+  .then(r => r.json())
+  .then(d => out.textContent = JSON.stringify(d))
+  .catch(e => out.textContent = "FAILED: " + e);
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "findings": [
+    "atelectasis",
+    "cardiomegaly",
+    "consolidation",
+    "edema",
+    "effusion",
+    "pneumonia",
+    "pneumothorax"
+  ],
+  "urgent": [
+    "pneumothorax",
+    "effusion",
+    "edema",
+    "consolidation",
+    "pneumonia"
+  ],
+  "target_sens_raise": 0.9,
+  "target_sens_unsure": 0.97,
+  "t_raise": 0.046855284692961505,
+  "t_unsure": 0.028617455329119332,
+  "temperature": {},
+  "composite": "max_of_urgent_probabilities",
+  "status": "PROVISIONAL: fitted by Part A on NIH validation. Urgent list needs clinician review."
+}

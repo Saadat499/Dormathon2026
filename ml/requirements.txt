@@ -1,0 +1,16 @@
+# Pinned: ood.joblib is a pickle (deploy with the same scikit-learn), and these exact wheels
+# are known to load under Windows Smart App Control.
+numpy==2.3.4
+pandas==2.3.3
+scikit-learn==1.7.2
+scipy==1.16.3
+pillow==12.0.0
+matplotlib==3.10.7
+joblib==1.5.2
+tqdm
+kagglehub      # only for --download
+# Backbone runtime: pick ONE
+torch          # --backbone densenet121 / resnet50 / resnet18
+torchvision    # same
+# onnxruntime-directml==1.24.4   # --backbone densenet121-onnx on Windows GPU (or onnxruntime / onnxruntime-gpu)
+# onnx==1.23.2                   # needed once, to build the ONNX graph in 00_check_setup.py

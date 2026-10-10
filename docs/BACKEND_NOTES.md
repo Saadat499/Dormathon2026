@@ -84,3 +84,26 @@ pip install -r requirements-dev.txt
 python -m pytest -q tests          # 37 tests
 uvicorn app.main:app --reload
 ```
+
+## Deployment
+
+- Render service `chesttriage-api` (free plan, Docker, context `./backend`, auto-deploy from `main`). A deploy of commit `49e9c23` reached **live**; its log shows `Application startup complete` and `GET / 200`.
+- **Not verified from the build sandbox:** the sandbox's network policy blocks `onrender.com`, so I could not curl the public URL. Run `scripts/verify_deploy.sh` (15 checks, including an upload) from any machine. The same script passes against a local instance.
+- Pushes to `main` did not trigger a Render build by themselves in this session; I triggered one through the Render API. If a later push does not deploy, press "Manual Deploy" in the dashboard.
+- **Free-tier limits not verified:** the service sleeps after idle time (the first request may take about a minute), the disk is wiped on redeploy and restart, and memory is limited. Locally the process peaks at about 105 MB RSS with a few uploads, which should fit, but this was not measured on Render.
+- **Vercel:** the connected Vercel account contains only a project named `chesttriage-cors-test`, not the VoxelSort frontend, so I could not set `VITE_API_URL` or check the live frontend. Locally I ran the unmodified frontend (Vite) against the backend with headless Chromium: Worklist, Upload, Study review (urgent request, override, mark reviewed), Safety vs Speed, Queue Race, Site readiness, Evidence tabs, OOD check and Audit log all rendered real responses with no API errors.
+
+## Frontend wording that conflicts with the evidence (not changed: outside the allowed files)
+
+These are static strings in `frontend/src/pages/`. They need Member D's decision:
+
+- `StudyReview.jsx`: "Calibrated model output" and "Calibrated probability". B's own numbers show little calibration improvement, and in the current backend there is no model output at all.
+- `SafetySpeed.jsx`: "Computed from N saved predictions" is shown even while the cohort is synthetic.
+- `Evidence.jsx`: no on-screen label that B's results are simulated (only the `data` column and the audit-row text carry it). The Calibration tab in particular shows ECE 0.443 then 0.432 with no synthetic label. `/evidence` returns a `provenance` object the page could display.
+- The live UI has no banner for "no model attached"; `GET /status` has the facts.
+
+## Hand-off: what A must provide to make this real
+
+1. `backend/model_artifacts/predictions.json` (or `.csv`) as described in `backend/model_artifacts/README.md`, with true labels. Then `/status` shows `saved_predictions.real: true`, and Safety vs Speed, Queue Race, the default threshold and the seeded queue switch to it automatically.
+2. A decision on running the network on the host (needs weights plus memory). If it fits, implement `predict` in `app/model.py` and return findings, heatmap path and a real confidence band.
+3. A's OOD detector to replace the placeholder in `app/ood.py`.

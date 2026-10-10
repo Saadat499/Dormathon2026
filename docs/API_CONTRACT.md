@@ -1,4 +1,4 @@
-# ChestTriage API contract (DRAFT v0.2 for team review)
+# VoxelSort API contract (DRAFT v0.3 for team review)
 
 Everyone builds against this file. Change it by agreement, not silently.
 Base URL (live): `https://chesttriage-api.onrender.com`  ·  Interactive docs: `/docs`
@@ -87,9 +87,9 @@ Frontend display labels (suggested): `raised` = "Urgent review", `unsure` = "AI 
 ### Safety vs Speed threshold
 | Method | Path | Request | Response |
 |---|---|---|---|
-| POST | `/threshold/preview` | `{"value":0.5}` | `{"abstention_rate":..,"sensitivity":..,"false_alarm_rate":..,"n":..}` recalculated from saved predictions. Changes nothing |
+| POST | `/threshold/preview` | `{"value":0.5}` | `{"abstention_rate":..,"sensitivity":..,"false_alarm_rate":..,"n":..,"n_positive":..}` recalculated from saved predictions. Changes nothing |
 | GET | `/threshold` | | `{"value":0.5,"min_sensitivity_target":0.9}` |
-| PUT | `/threshold` | `{"value":0.45,"confirm":true,"actor":"..."}` | updated threshold. `400` unless `confirm` is `true`. Logged |
+| PUT | `/threshold` | `{"value":0.45,"confirm":true,"actor":"..."}` | updated threshold. `400` unless `confirm` is `true`, and `400` if the value gives sensitivity below `min_sensitivity_target`. Logged |
 
 Sensitivity target is fixed first, then false alarms are minimised at that target. Error never reaches zero, so the UI must not imply it can.
 
@@ -102,19 +102,19 @@ Sensitivity target is fixed first, then false alarms are minimised at that targe
 {
   "assumptions": {"...": "echoed back so the slide can state them"},
   "fcfs":        {"urgent_wait_min": 0, "other_extra_wait_min": 0, "missed_urgent": 0, "wrong_flags": 0},
-  "chesttriage": {"urgent_wait_min": 0, "other_extra_wait_min": 0, "missed_urgent": 0, "wrong_flags": 0},
-  "timeline": [{"t_min": 0, "fcfs_order": ["..."], "chesttriage_order": ["..."]}]
+  "voxelsort":   {"urgent_wait_min": 0, "other_extra_wait_min": 0, "missed_urgent": 0, "wrong_flags": 0},
+  "read_order": {"fcfs": [{"id":"SIM-001","wait_min":0,"truly_urgent":true}], "voxelsort": [{"id":"SIM-001","wait_min":0,"truly_urgent":true}]}
 }
 ```
 
-Runs on real saved predictions, including misses and wrong flags. Owned by B (engine) and C (endpoint).
+FCFS has no model, so its `missed_urgent` and `wrong_flags` are `null` (shown as n/a). Runs on real saved predictions, including misses and wrong flags. Owned by B (engine) and C (endpoint).
 
 ### Site Readiness
 | Method | Path | Request | Response |
 |---|---|---|---|
 | POST | `/site-readiness` | multipart: sample images and an optional labels CSV | `202` `{"job_id":"..."}` |
 | GET | `/site-readiness/{job_id}` | | result below |
-| GET | `/site-readiness/sample-size` | query: `target_sensitivity`, `expected_sensitivity`, `confidence` (default 0.95) | `{"positives_needed":..,"scans_needed":..}` computed live |
+| GET | `/site-readiness/sample-size` | query: `target_sensitivity`, `expected_sensitivity`, `confidence` (default 0.95), `prevalence` | `{"positives_needed":..,"scans_needed":..,"note":".."}` computed live |
 
 ```json
 {
@@ -122,6 +122,7 @@ Runs on real saved predictions, including misses and wrong flags. Owned by B (en
   "drift": {"score": 0.0, "warning": false, "note": "warning signal only, not a proven predictor"},
   "sensitivity": {"point": 0.0, "ci_low": 0.0, "ci_high": 0.0, "width": 0.0, "method": "clopper-pearson", "n_positive": 0},
   "target": 0.9,
+  "note": "optional, e.g. no labels supplied",
   "verdict": "ready | use_with_caution | not_ready | not_enough_evidence"
 }
 ```

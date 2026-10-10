@@ -7,3 +7,5 @@ uploads/
 data/
 *.pt
 *.pth
+node_modules/
+dist/

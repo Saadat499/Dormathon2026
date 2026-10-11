@@ -1,0 +1,3 @@
+# policy.json is hashed into Member A's model_version and checked against MANIFEST.json.
+# Keep its bytes exactly as A froze them (CRLF line endings): no end-of-line conversion.
+policy.json -text

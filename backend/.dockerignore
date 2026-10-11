@@ -1,7 +1,16 @@
+.venv/
 venv/
+data/
 __pycache__/
 *.pyc
 .env
+.pytest_cache/
 tests/
 requirements-dev.txt
-.pytest_cache/
+docker-compose.yml
+# model files are fetched (and checksum-verified) during the build, never copied from a developer machine
+model_artifacts/backbone.json
+model_artifacts/*.onnx
+model_artifacts/head.npz
+model_artifacts/ood.joblib
+model_artifacts/drift_reference.npy

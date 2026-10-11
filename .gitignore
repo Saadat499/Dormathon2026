@@ -15,7 +15,6 @@ dist/
 backend/model_artifacts/backbone.json
 backend/model_artifacts/*.onnx
 backend/model_artifacts/head.npz
-backend/model_artifacts/policy.json
 backend/model_artifacts/ood.joblib
 backend/model_artifacts/drift_reference.npy
 .env.*

@@ -11,7 +11,8 @@ Everything the backend needs from Member A's model, for the selected version
 | `saved_predictions_nih.csv.gz` | yes | Real model outputs with true labels: NIH validation (11,341) and held-out test (21,845) images. Scores only, no images |
 | `evidence.json` | yes | Real evaluation results served by `GET /evidence` |
 | `demo/demo_studies.json`, `demo/images`, `demo/heatmaps`, `demo/failures` | yes | 59 public NIH ChestX-ray14 demo images (plus A's synthetic non-chest test images) with their saved model outputs, keyed by image SHA-256 |
-| `backbone.json`, `backbone_densenet121-onnx.onnx`, `head.npz`, `policy.json`, `ood.joblib`, `drift_reference.npy` | **no** (git-ignored) | The model itself. Already in the repo under `ml/artifacts_v2_imagenet_fullnih/`; copied or downloaded here by `scripts/fetch_model.py`, which verifies every SHA-256 |
+| `policy.json` | yes, byte-exact (`.gitattributes`: `-text`) | Member A's policy. It is hashed into `model_version`, so its bytes must be exactly what A froze (CRLF line endings). The copy under `ml/` is stored LF-normalised by git and gives a different hash on Linux and macOS |
+| `backbone.json`, `backbone_densenet121-onnx.onnx`, `head.npz`, `ood.joblib`, `drift_reference.npy` | **no** (git-ignored) | The model itself. Already in the repo under `ml/artifacts_v2_imagenet_fullnih/`; copied or downloaded here by `scripts/fetch_model.py`, which verifies every SHA-256 |
 
 ```powershell
 # from backend\

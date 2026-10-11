@@ -1,0 +1,21 @@
+# Local use:  docker compose up --build     (from backend/)
+# The named volume keeps the SQLite database, uploads and heatmaps between restarts.
+services:
+  api:
+    build:
+      context: .
+      args:
+        INCLUDE_MODEL: "1"
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: dev
+      PORT: "8000"
+      DATA_DIR: /app/data
+      ALLOWED_ORIGINS: "http://localhost:5173,http://127.0.0.1:5173"
+      MODEL_MODE: auto
+      MIN_SENSITIVITY_TARGET: "0.9"
+    volumes:
+      - voxelsort-data:/app/data
+volumes:
+  voxelsort-data:

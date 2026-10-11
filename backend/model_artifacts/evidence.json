@@ -1,0 +1,1036 @@
+{
+ "provenance": {
+  "data": "real",
+  "model_version": "partA-0.1.0+4ca280b3cd",
+  "artifacts_folder": "artifacts_v2_imagenet_fullnih",
+  "statement": "Results of Member A's frozen model on public datasets. Trained on NIH ChestX-ray14 train patients; thresholds and calibration fitted on the NIH validation split; reported on the NIH test split (21,845 images, never used for training, thresholds or model choice) and on CheXpert (a different hospital's dataset).",
+  "sources": [
+   "reports/internal_metrics.csv",
+   "reports/cross_dataset.csv",
+   "reports/where_it_fails.csv",
+   "reports/heatmap_attention.md",
+   "reports/ood_report.csv",
+   "reports/drift_controls.csv",
+   "reports/budget_table.csv",
+   "reports/model_comparison.csv",
+   "predictions/nih_full.csv"
+  ],
+  "calibration_statement": "No claim is made that the probabilities are well calibrated. See the calibration block for the measured curves.",
+  "caveats": [
+   "Public data is enriched: 'any urgent finding' is 21% of NIH and 72% of CheXpert, far above a typical worklist. PPV must be recomputed for a hospital's own prevalence.",
+   "NIH labels are text-mined from reports and CheXpert labels are extracted by a labeller: both are noisy.",
+   "The urgent list (pneumothorax, effusion, edema, consolidation, pneumonia) is a provisional assumption that needs clinician review.",
+   "The model is modest: AUROC 0.81 for 'any urgent finding' on NIH test. Pneumonia is weak (0.69) and is not a headline finding.",
+   "Performance dropped on a different hospital's dataset (0.811 to 0.755). Labels, prevalence and image format all contribute.",
+   "At the 90% sensitivity target about half of non-urgent scans are also raised."
+  ]
+ },
+ "per_finding": [
+  {
+   "finding": "atelectasis",
+   "auroc": 0.756,
+   "auroc_ci_low": 0.742,
+   "auroc_ci_high": 0.769,
+   "auprc": 0.256,
+   "n_positive": 2225,
+   "prevalence": 0.102,
+   "sensitivity_at_val90_threshold": 0.91,
+   "false_alarm_rate_there": 0.603,
+   "data": "NIH test split, held out",
+   "ece_nih_test": 0.005
+  },
+  {
+   "finding": "cardiomegaly",
+   "auroc": 0.821,
+   "auroc_ci_low": 0.8,
+   "auroc_ci_high": 0.842,
+   "auprc": 0.163,
+   "n_positive": 587,
+   "prevalence": 0.027,
+   "sensitivity_at_val90_threshold": 0.893,
+   "false_alarm_rate_there": 0.459,
+   "data": "NIH test split, held out",
+   "ece_nih_test": 0.0017
+  },
+  {
+   "finding": "consolidation",
+   "auroc": 0.75,
+   "auroc_ci_low": 0.729,
+   "auroc_ci_high": 0.77,
+   "auprc": 0.104,
+   "n_positive": 926,
+   "prevalence": 0.042,
+   "sensitivity_at_val90_threshold": 0.884,
+   "false_alarm_rate_there": 0.555,
+   "data": "NIH test split, held out",
+   "ece_nih_test": 0.0051
+  },
+  {
+   "finding": "edema",
+   "auroc": 0.864,
+   "auroc_ci_low": 0.846,
+   "auroc_ci_high": 0.882,
+   "auprc": 0.113,
+   "n_positive": 444,
+   "prevalence": 0.02,
+   "sensitivity_at_val90_threshold": 0.89,
+   "false_alarm_rate_there": 0.317,
+   "data": "NIH test split, held out",
+   "ece_nih_test": 0.002
+  },
+  {
+   "finding": "effusion",
+   "auroc": 0.836,
+   "auroc_ci_low": 0.825,
+   "auroc_ci_high": 0.848,
+   "auprc": 0.427,
+   "n_positive": 2819,
+   "prevalence": 0.129,
+   "sensitivity_at_val90_threshold": 0.919,
+   "false_alarm_rate_there": 0.456,
+   "data": "NIH test split, held out",
+   "ece_nih_test": 0.0151
+  },
+  {
+   "finding": "pneumonia",
+   "auroc": 0.686,
+   "auroc_ci_low": 0.652,
+   "auroc_ci_high": 0.716,
+   "auprc": 0.027,
+   "n_positive": 262,
+   "prevalence": 0.012,
+   "sensitivity_at_val90_threshold": 0.943,
+   "false_alarm_rate_there": 0.813,
+   "data": "NIH test split, held out",
+   "ece_nih_test": 0.0005
+  },
+  {
+   "finding": "pneumothorax",
+   "auroc": 0.839,
+   "auroc_ci_low": 0.818,
+   "auroc_ci_high": 0.857,
+   "auprc": 0.253,
+   "n_positive": 1004,
+   "prevalence": 0.046,
+   "sensitivity_at_val90_threshold": 0.943,
+   "false_alarm_rate_there": 0.586,
+   "data": "NIH test split, held out",
+   "ece_nih_test": 0.0045
+  },
+  {
+   "finding": "ANY_URGENT",
+   "auroc": 0.811,
+   "auroc_ci_low": 0.801,
+   "auroc_ci_high": 0.822,
+   "auprc": 0.516,
+   "n_positive": 4659,
+   "prevalence": 0.213,
+   "sensitivity_at_val90_threshold": 0.919,
+   "false_alarm_rate_there": 0.512,
+   "data": "NIH test split, held out",
+   "ece_nih_test": null
+  }
+ ],
+ "cross_dataset": [
+  {
+   "finding": "atelectasis",
+   "auroc_nih": 0.756,
+   "auroc_chexpert": 0.612,
+   "auroc_drop": -0.144,
+   "sens_nih": 0.91,
+   "sens_chexpert": 0.789,
+   "false_alarm_nih": 0.603,
+   "false_alarm_chexpert": 0.634,
+   "n_pos_chexpert": 2315,
+   "ece_nih_test": 0.005,
+   "ece_chexpert": 0.0948
+  },
+  {
+   "finding": "cardiomegaly",
+   "auroc_nih": 0.821,
+   "auroc_chexpert": 0.681,
+   "auroc_drop": -0.14,
+   "sens_nih": 0.893,
+   "sens_chexpert": 0.663,
+   "false_alarm_nih": 0.459,
+   "false_alarm_chexpert": 0.415,
+   "n_pos_chexpert": 1839,
+   "ece_nih_test": 0.0017,
+   "ece_chexpert": 0.1015
+  },
+  {
+   "finding": "consolidation",
+   "auroc_nih": 0.75,
+   "auroc_chexpert": 0.646,
+   "auroc_drop": -0.103,
+   "sens_nih": 0.884,
+   "sens_chexpert": 0.898,
+   "false_alarm_nih": 0.555,
+   "false_alarm_chexpert": 0.723,
+   "n_pos_chexpert": 1046,
+   "ece_nih_test": 0.0051,
+   "ece_chexpert": 0.0404
+  },
+  {
+   "finding": "edema",
+   "auroc_nih": 0.864,
+   "auroc_chexpert": 0.721,
+   "auroc_drop": -0.143,
+   "sens_nih": 0.89,
+   "sens_chexpert": 0.827,
+   "false_alarm_nih": 0.317,
+   "false_alarm_chexpert": 0.511,
+   "n_pos_chexpert": 3810,
+   "ece_nih_test": 0.002,
+   "ece_chexpert": 0.245
+  },
+  {
+   "finding": "effusion",
+   "auroc_nih": 0.836,
+   "auroc_chexpert": 0.768,
+   "auroc_drop": -0.068,
+   "sens_nih": 0.919,
+   "sens_chexpert": 0.894,
+   "false_alarm_nih": 0.456,
+   "false_alarm_chexpert": 0.543,
+   "n_pos_chexpert": 6217,
+   "ece_nih_test": 0.0151,
+   "ece_chexpert": 0.2957
+  },
+  {
+   "finding": "pneumonia",
+   "auroc_nih": 0.686,
+   "auroc_chexpert": 0.589,
+   "auroc_drop": -0.098,
+   "sens_nih": 0.943,
+   "sens_chexpert": 0.98,
+   "false_alarm_nih": 0.813,
+   "false_alarm_chexpert": 0.975,
+   "n_pos_chexpert": 397,
+   "ece_nih_test": 0.0005,
+   "ece_chexpert": 0.0118
+  },
+  {
+   "finding": "pneumothorax",
+   "auroc_nih": 0.839,
+   "auroc_chexpert": 0.697,
+   "auroc_drop": -0.142,
+   "sens_nih": 0.943,
+   "sens_chexpert": 0.992,
+   "false_alarm_nih": 0.586,
+   "false_alarm_chexpert": 0.958,
+   "n_pos_chexpert": 1406,
+   "ece_nih_test": 0.0045,
+   "ece_chexpert": 0.0692
+  },
+  {
+   "finding": "ANY_URGENT",
+   "auroc_nih": 0.811,
+   "auroc_chexpert": 0.755,
+   "auroc_drop": -0.057,
+   "sens_nih": 0.919,
+   "sens_chexpert": 0.966,
+   "false_alarm_nih": 0.512,
+   "false_alarm_chexpert": 0.734,
+   "n_pos_chexpert": 9429,
+   "ece_nih_test": null,
+   "ece_chexpert": null
+  }
+ ],
+ "calibration": {
+  "finding": "effusion",
+  "before": [
+   {
+    "confidence": 0.037,
+    "accuracy": 0.0355,
+    "count": 13812
+   },
+   {
+    "confidence": 0.1438,
+    "accuracy": 0.1789,
+    "count": 3712
+   },
+   {
+    "confidence": 0.2455,
+    "accuracy": 0.2941,
+    "count": 1972
+   },
+   {
+    "confidence": 0.346,
+    "accuracy": 0.384,
+    "count": 1112
+   },
+   {
+    "confidence": 0.4444,
+    "accuracy": 0.4771,
+    "count": 612
+   },
+   {
+    "confidence": 0.5438,
+    "accuracy": 0.5342,
+    "count": 322
+   },
+   {
+    "confidence": 0.6455,
+    "accuracy": 0.6034,
+    "count": 179
+   },
+   {
+    "confidence": 0.7445,
+    "accuracy": 0.6552,
+    "count": 87
+   },
+   {
+    "confidence": 0.839,
+    "accuracy": 0.7429,
+    "count": 35
+   },
+   {
+    "confidence": 0.9043,
+    "accuracy": 1.0,
+    "count": 2
+   }
+  ],
+  "after": [
+   {
+    "confidence": 0.0371,
+    "accuracy": 0.0356,
+    "count": 13809
+   },
+   {
+    "confidence": 0.1439,
+    "accuracy": 0.1787,
+    "count": 3711
+   },
+   {
+    "confidence": 0.2455,
+    "accuracy": 0.2942,
+    "count": 1975
+   },
+   {
+    "confidence": 0.346,
+    "accuracy": 0.384,
+    "count": 1112
+   },
+   {
+    "confidence": 0.4443,
+    "accuracy": 0.4763,
+    "count": 613
+   },
+   {
+    "confidence": 0.5437,
+    "accuracy": 0.5342,
+    "count": 322
+   },
+   {
+    "confidence": 0.6454,
+    "accuracy": 0.6034,
+    "count": 179
+   },
+   {
+    "confidence": 0.7443,
+    "accuracy": 0.6552,
+    "count": 87
+   },
+   {
+    "confidence": 0.8388,
+    "accuracy": 0.7429,
+    "count": 35
+   },
+   {
+    "confidence": 0.9042,
+    "accuracy": 1.0,
+    "count": 2
+   }
+  ],
+  "ece_before": 0.0151,
+  "ece_after": 0.0151,
+  "temperature": 1.001,
+  "per_finding": {
+   "atelectasis": {
+    "ece_before": 0.005,
+    "ece_after": 0.0046,
+    "temperature": 1.002,
+    "n_test": 21845,
+    "n_positive_test": 2225,
+    "ece_chexpert_external": 0.0948,
+    "n_chexpert_external": 12652
+   },
+   "cardiomegaly": {
+    "ece_before": 0.0017,
+    "ece_after": 0.0053,
+    "temperature": 0.949,
+    "n_test": 21845,
+    "n_positive_test": 587,
+    "ece_chexpert_external": 0.1015,
+    "n_chexpert_external": 14477
+   },
+   "consolidation": {
+    "ece_before": 0.0051,
+    "ece_after": 0.0044,
+    "temperature": 1.008,
+    "n_test": 21845,
+    "n_positive_test": 926,
+    "ece_chexpert_external": 0.0404,
+    "n_chexpert_external": 13137
+   },
+   "edema": {
+    "ece_before": 0.002,
+    "ece_after": 0.0027,
+    "temperature": 0.982,
+    "n_test": 21845,
+    "n_positive_test": 444,
+    "ece_chexpert_external": 0.245,
+    "n_chexpert_external": 14071
+   },
+   "effusion": {
+    "ece_before": 0.0151,
+    "ece_after": 0.0151,
+    "temperature": 1.001,
+    "n_test": 21845,
+    "n_positive_test": 2819,
+    "ece_chexpert_external": 0.2957,
+    "n_chexpert_external": 14278
+   },
+   "pneumonia": {
+    "ece_before": 0.0005,
+    "ece_after": 0.001,
+    "temperature": 1.03,
+    "n_test": 21845,
+    "n_positive_test": 262,
+    "ece_chexpert_external": 0.0118,
+    "n_chexpert_external": 13766
+   },
+   "pneumothorax": {
+    "ece_before": 0.0045,
+    "ece_after": 0.0041,
+    "temperature": 0.996,
+    "n_test": 21845,
+    "n_positive_test": 1004,
+    "ece_chexpert_external": 0.0692,
+    "n_chexpert_external": 14792
+   }
+  },
+  "data": "real: fitted on NIH validation, measured on NIH test (held out)",
+  "method": "Member B's ModelCalibrator (temperature scaling) and compute_reliability_curve (10 equal-width bins)",
+  "note": "'Before' is the model as served. 'After' applies a temperature fitted on the validation split. The temperature is NOT applied to the scores the app serves (Member A's policy.json has no temperatures), so 'before' describes the live probabilities. On NIH test (same source as the training data) the expected calibration error is small because most scans have low probabilities; on CheXpert, a different hospital's dataset, it is much larger (per_finding.ece_chexpert_external). Report these numbers; do not describe the model as well calibrated."
+ },
+ "shortcut_audit": {
+  "data_source": "real: NIH test split (held out) and Member A's saliency audit",
+  "ap_view_any_urgent_auroc": 0.749,
+  "pa_view_any_urgent_auroc": 0.834,
+  "ap_pa_auroc_gap": 0.0841,
+  "ap_view_sensitivity_at_current_cutoff": 0.96,
+  "pa_view_sensitivity_at_current_cutoff": 0.882,
+  "ap_view_false_alarm_rate": 0.705,
+  "pa_view_false_alarm_rate": 0.425,
+  "ap_view_n": 8777,
+  "pa_view_n": 13068,
+  "ap_pa_result_by_b_rule": "Robust: Performance consistent across portable bedside (AP) and ambulatory (PA) projections.",
+  "ap_pa_reading": "B's rule only checks the AUROC gap (limit 0.10); the gap here is 0.084. At the current cut-off AP (bedside) scans are raised much more often than PA scans: false-alarm rate 0.705 against 0.425. View position may act as a shortcut.",
+  "ap_pa_method": "Member B's ShortcutAuditor.audit_view_position_confounder on the 'any urgent finding' score",
+  "saliency_top_band_share_nih_missed_urgent": 0.344,
+  "saliency_top_band_share_nih_confident_hit": 0.085,
+  "saliency_top_band_share_if_uniform": 0.121,
+  "saliency_border_share_chexpert_missed_urgent": 0.458,
+  "saliency_border_share_if_uniform": 0.361,
+  "saliency_reading": "Member A's audit: maps for missed urgent scans sit on the top band (neck, clavicles) far more than a uniform map would; several CheXpert maps sit on edges, tubes and one text marker. Saliency is not evidence that the model is right.",
+  "chest_tube_audit": "not available: neither dataset copy carries a chest-tube annotation, so B's chest-tube audit cannot be run on real data"
+ },
+ "failures": [
+  {
+   "study_id": "nih_00025583_005",
+   "kind": "missed_urgent",
+   "caption": "Missed urgent scan. Labelled pneumonia, but the model's urgent score was only 0.00 (its top urgent finding: pneumothorax). Right: saliency for pneumothorax.",
+   "image_path": "/evidence/failures/nih_00025583_005.jpg",
+   "dataset": "NIH ChestX-ray14 (public)"
+  },
+  {
+   "study_id": "nih_00030488_001",
+   "kind": "missed_urgent",
+   "caption": "Missed urgent scan. Labelled consolidation, but the model's urgent score was only 0.01 (its top urgent finding: pneumothorax). Right: saliency for pneumothorax.",
+   "image_path": "/evidence/failures/nih_00030488_001.jpg",
+   "dataset": "NIH ChestX-ray14 (public)"
+  },
+  {
+   "study_id": "nih_00013558_000",
+   "kind": "missed_urgent",
+   "caption": "Missed urgent scan. Labelled pneumothorax, but the model's urgent score was only 0.01 (its top urgent finding: pneumothorax). Right: saliency for pneumothorax.",
+   "image_path": "/evidence/failures/nih_00013558_000.jpg",
+   "dataset": "NIH ChestX-ray14 (public)"
+  },
+  {
+   "study_id": "nih_00003663_003",
+   "kind": "missed_urgent",
+   "caption": "Missed urgent scan. Labelled atelectasis,consolidation, but the model's urgent score was only 0.01 (its top urgent finding: effusion). Right: saliency for effusion.",
+   "image_path": "/evidence/failures/nih_00003663_003.jpg",
+   "dataset": "NIH ChestX-ray14 (public)"
+  },
+  {
+   "study_id": "nih_00015915_003",
+   "kind": "false_alarm",
+   "caption": "False alarm. No urgent finding in the label, but the model scored 0.85 for effusion. Right: saliency for effusion.",
+   "image_path": "/evidence/failures/nih_00015915_003.jpg",
+   "dataset": "NIH ChestX-ray14 (public)"
+  },
+  {
+   "study_id": "nih_00020195_014",
+   "kind": "false_alarm",
+   "caption": "False alarm. No urgent finding in the label, but the model scored 0.85 for pneumothorax. Right: saliency for pneumothorax.",
+   "image_path": "/evidence/failures/nih_00020195_014.jpg",
+   "dataset": "NIH ChestX-ray14 (public)"
+  },
+  {
+   "study_id": "nih_00004186_002",
+   "kind": "false_alarm",
+   "caption": "False alarm. No urgent finding in the label, but the model scored 0.84 for effusion. Right: saliency for effusion.",
+   "image_path": "/evidence/failures/nih_00004186_002.jpg",
+   "dataset": "NIH ChestX-ray14 (public)"
+  },
+  {
+   "study_id": "nih_00017083_001",
+   "kind": "false_alarm",
+   "caption": "False alarm. No urgent finding in the label, but the model scored 0.84 for effusion. Right: saliency for effusion.",
+   "image_path": "/evidence/failures/nih_00017083_001.jpg",
+   "dataset": "NIH ChestX-ray14 (public)"
+  }
+ ],
+ "extras": {
+  "ood_report": [
+   {
+    "category": "NIH test (real chest X-rays)",
+    "role": "should NOT be flagged",
+    "n": 21845,
+    "flagged_rate": 0.0057,
+    "flag_maha": 0.005,
+    "flag_probe": 0.0016,
+    "median_maha": 120.7331
+   },
+   {
+    "category": "CheXpert external (new dataset)",
+    "role": "drift signal, not an error",
+    "n": 15000,
+    "flagged_rate": 0.0674,
+    "flag_maha": 0.0663,
+    "flag_probe": 0.0056,
+    "median_maha": 197.1599
+   },
+   {
+    "category": "held-out rotated_90",
+    "role": "should be flagged",
+    "n": 150,
+    "flagged_rate": 1.0,
+    "flag_maha": 0.7267,
+    "flag_probe": 1.0,
+    "median_maha": 325.232
+   },
+   {
+    "category": "held-out rotated_180",
+    "role": "should be flagged",
+    "n": 150,
+    "flagged_rate": 1.0,
+    "flag_maha": 0.6867,
+    "flag_probe": 1.0,
+    "median_maha": 329.0426
+   },
+   {
+    "category": "held-out rotated_270",
+    "role": "should be flagged",
+    "n": 150,
+    "flagged_rate": 1.0,
+    "flag_maha": 0.66,
+    "flag_probe": 1.0,
+    "median_maha": 321.0958
+   },
+   {
+    "category": "held-out flipped_vertical",
+    "role": "should be flagged",
+    "n": 150,
+    "flagged_rate": 1.0,
+    "flag_maha": 0.7267,
+    "flag_probe": 0.9933,
+    "median_maha": 332.8564
+   },
+   {
+    "category": "held-out inverted",
+    "role": "should be flagged",
+    "n": 150,
+    "flagged_rate": 1.0,
+    "flag_maha": 0.9933,
+    "flag_probe": 1.0,
+    "median_maha": 466.7849
+   },
+   {
+    "category": "held-out heavy_noise",
+    "role": "should be flagged",
+    "n": 150,
+    "flagged_rate": 1.0,
+    "flag_maha": 1.0,
+    "flag_probe": 1.0,
+    "median_maha": 1183.0332
+   },
+   {
+    "category": "held-out heavy_blur",
+    "role": "should be flagged",
+    "n": 150,
+    "flagged_rate": 1.0,
+    "flag_maha": 1.0,
+    "flag_probe": 1.0,
+    "median_maha": 699.6132
+   },
+   {
+    "category": "held-out low_contrast",
+    "role": "should be flagged",
+    "n": 150,
+    "flagged_rate": 0.9933,
+    "flag_maha": 0.0867,
+    "flag_probe": 0.9933,
+    "median_maha": 228.312
+   },
+   {
+    "category": "synthetic non-chest (held-out)",
+    "role": "should be flagged",
+    "n": 100,
+    "flagged_rate": 1.0,
+    "flag_maha": 1.0,
+    "flag_probe": 1.0,
+    "median_maha": 1466.8591
+   }
+  ],
+  "ood_statement": "Member A's detector flagged 99-100% of the gross mistakes in A's tests and 0.6% of NIH test images. The same mistake types were used to train it, so real-world catch rates will be lower. It flags only 6.7% of CheXpert: it is not a site-shift detector.",
+  "drift_controls": [
+   {
+    "repeat": 0,
+    "comparison": "baseline",
+    "n_per_group": 200,
+    "domain_auroc": 0.47
+   },
+   {
+    "repeat": 0,
+    "comparison": "jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.999
+   },
+   {
+    "repeat": 0,
+    "comparison": "resize_jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.998
+   },
+   {
+    "repeat": 0,
+    "comparison": "chexpert",
+    "n_per_group": 200,
+    "domain_auroc": 1.0
+   },
+   {
+    "repeat": 1,
+    "comparison": "baseline",
+    "n_per_group": 200,
+    "domain_auroc": 0.554
+   },
+   {
+    "repeat": 1,
+    "comparison": "jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.999
+   },
+   {
+    "repeat": 1,
+    "comparison": "resize_jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.999
+   },
+   {
+    "repeat": 1,
+    "comparison": "chexpert",
+    "n_per_group": 200,
+    "domain_auroc": 1.0
+   },
+   {
+    "repeat": 2,
+    "comparison": "baseline",
+    "n_per_group": 200,
+    "domain_auroc": 0.545
+   },
+   {
+    "repeat": 2,
+    "comparison": "jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 1.0
+   },
+   {
+    "repeat": 2,
+    "comparison": "resize_jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.994
+   },
+   {
+    "repeat": 2,
+    "comparison": "chexpert",
+    "n_per_group": 200,
+    "domain_auroc": 1.0
+   },
+   {
+    "repeat": 3,
+    "comparison": "baseline",
+    "n_per_group": 200,
+    "domain_auroc": 0.454
+   },
+   {
+    "repeat": 3,
+    "comparison": "jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.996
+   },
+   {
+    "repeat": 3,
+    "comparison": "resize_jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.997
+   },
+   {
+    "repeat": 3,
+    "comparison": "chexpert",
+    "n_per_group": 200,
+    "domain_auroc": 1.0
+   },
+   {
+    "repeat": 4,
+    "comparison": "baseline",
+    "n_per_group": 200,
+    "domain_auroc": 0.384
+   },
+   {
+    "repeat": 4,
+    "comparison": "jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.998
+   },
+   {
+    "repeat": 4,
+    "comparison": "resize_jpeg",
+    "n_per_group": 200,
+    "domain_auroc": 0.998
+   },
+   {
+    "repeat": 4,
+    "comparison": "chexpert",
+    "n_per_group": 200,
+    "domain_auroc": 1.0
+   }
+  ],
+  "budget_table": [
+   {
+    "mode": "queue_rank",
+    "budget": 0.05,
+    "dataset": "nih_test",
+    "score_cutoff": 0.437,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.05,
+    "sensitivity": 0.151,
+    "ceiling_sensitivity": 0.235,
+    "random_sensitivity": 0.05,
+    "false_alarm_rate": 0.023,
+    "ppv_at_dataset_prevalence": 0.643,
+    "dataset_prevalence": 0.213,
+    "n": 21845
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.05,
+    "dataset": "chexpert_external",
+    "score_cutoff": 0.531,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.05,
+    "sensitivity": 0.062,
+    "ceiling_sensitivity": 0.069,
+    "random_sensitivity": 0.05,
+    "false_alarm_rate": 0.018,
+    "ppv_at_dataset_prevalence": 0.9,
+    "dataset_prevalence": 0.724,
+    "n": 13032
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.1,
+    "dataset": "nih_test",
+    "score_cutoff": 0.329,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.1,
+    "sensitivity": 0.279,
+    "ceiling_sensitivity": 0.469,
+    "random_sensitivity": 0.1,
+    "false_alarm_rate": 0.051,
+    "ppv_at_dataset_prevalence": 0.595,
+    "dataset_prevalence": 0.213,
+    "n": 21845
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.1,
+    "dataset": "chexpert_external",
+    "score_cutoff": 0.439,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.1,
+    "sensitivity": 0.126,
+    "ceiling_sensitivity": 0.138,
+    "random_sensitivity": 0.1,
+    "false_alarm_rate": 0.032,
+    "ppv_at_dataset_prevalence": 0.912,
+    "dataset_prevalence": 0.724,
+    "n": 13032
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.15,
+    "dataset": "nih_test",
+    "score_cutoff": 0.265,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.15,
+    "sensitivity": 0.394,
+    "ceiling_sensitivity": 0.703,
+    "random_sensitivity": 0.15,
+    "false_alarm_rate": 0.084,
+    "ppv_at_dataset_prevalence": 0.56,
+    "dataset_prevalence": 0.213,
+    "n": 21845
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.15,
+    "dataset": "chexpert_external",
+    "score_cutoff": 0.382,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.15,
+    "sensitivity": 0.188,
+    "ceiling_sensitivity": 0.207,
+    "random_sensitivity": 0.15,
+    "false_alarm_rate": 0.052,
+    "ppv_at_dataset_prevalence": 0.905,
+    "dataset_prevalence": 0.724,
+    "n": 13032
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.2,
+    "dataset": "nih_test",
+    "score_cutoff": 0.217,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.2,
+    "sensitivity": 0.496,
+    "ceiling_sensitivity": 0.938,
+    "random_sensitivity": 0.2,
+    "false_alarm_rate": 0.12,
+    "ppv_at_dataset_prevalence": 0.529,
+    "dataset_prevalence": 0.213,
+    "n": 21845
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.2,
+    "dataset": "chexpert_external",
+    "score_cutoff": 0.339,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.2,
+    "sensitivity": 0.248,
+    "ceiling_sensitivity": 0.276,
+    "random_sensitivity": 0.2,
+    "false_alarm_rate": 0.073,
+    "ppv_at_dataset_prevalence": 0.899,
+    "dataset_prevalence": 0.724,
+    "n": 13032
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.3,
+    "dataset": "nih_test",
+    "score_cutoff": 0.148,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.3,
+    "sensitivity": 0.66,
+    "ceiling_sensitivity": 1.0,
+    "random_sensitivity": 0.3,
+    "false_alarm_rate": 0.203,
+    "ppv_at_dataset_prevalence": 0.469,
+    "dataset_prevalence": 0.213,
+    "n": 21845
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.3,
+    "dataset": "chexpert_external",
+    "score_cutoff": 0.272,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.3,
+    "sensitivity": 0.369,
+    "ceiling_sensitivity": 0.415,
+    "random_sensitivity": 0.3,
+    "false_alarm_rate": 0.119,
+    "ppv_at_dataset_prevalence": 0.89,
+    "dataset_prevalence": 0.724,
+    "n": 13032
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.4,
+    "dataset": "nih_test",
+    "score_cutoff": 0.102,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.4,
+    "sensitivity": 0.78,
+    "ceiling_sensitivity": 1.0,
+    "random_sensitivity": 0.4,
+    "false_alarm_rate": 0.297,
+    "ppv_at_dataset_prevalence": 0.416,
+    "dataset_prevalence": 0.213,
+    "n": 21845
+   },
+   {
+    "mode": "queue_rank",
+    "budget": 0.4,
+    "dataset": "chexpert_external",
+    "score_cutoff": 0.223,
+    "cutoff_source": "this queue",
+    "flag_rate": 0.4,
+    "sensitivity": 0.483,
+    "ceiling_sensitivity": 0.553,
+    "random_sensitivity": 0.4,
+    "false_alarm_rate": 0.182,
+    "ppv_at_dataset_prevalence": 0.874,
+    "dataset_prevalence": 0.724,
+    "n": 13032
+   }
+  ],
+  "model_comparison_v1_vs_v2": [
+   {
+    "A_folder": "artifacts_v1_imagenet_frozen",
+    "B_folder": "artifacts_v2_imagenet_fullnih",
+    "finding": "atelectasis",
+    "n_pos": 2225,
+    "auroc_A": 0.74,
+    "A_lo": 0.726,
+    "A_hi": 0.755,
+    "auroc_B": 0.756,
+    "B_lo": 0.743,
+    "B_hi": 0.769,
+    "diff_B_minus_A": 0.016,
+    "diff_lo": 0.01,
+    "diff_hi": 0.021,
+    "verdict": "B better"
+   },
+   {
+    "A_folder": "artifacts_v1_imagenet_frozen",
+    "B_folder": "artifacts_v2_imagenet_fullnih",
+    "finding": "cardiomegaly",
+    "n_pos": 587,
+    "auroc_A": 0.789,
+    "A_lo": 0.761,
+    "A_hi": 0.812,
+    "auroc_B": 0.821,
+    "B_lo": 0.797,
+    "B_hi": 0.842,
+    "diff_B_minus_A": 0.033,
+    "diff_lo": 0.021,
+    "diff_hi": 0.044,
+    "verdict": "B better"
+   },
+   {
+    "A_folder": "artifacts_v1_imagenet_frozen",
+    "B_folder": "artifacts_v2_imagenet_fullnih",
+    "finding": "consolidation",
+    "n_pos": 926,
+    "auroc_A": 0.742,
+    "A_lo": 0.721,
+    "A_hi": 0.762,
+    "auroc_B": 0.75,
+    "B_lo": 0.73,
+    "B_hi": 0.77,
+    "diff_B_minus_A": 0.008,
+    "diff_lo": 0.001,
+    "diff_hi": 0.015,
+    "verdict": "B better"
+   },
+   {
+    "A_folder": "artifacts_v1_imagenet_frozen",
+    "B_folder": "artifacts_v2_imagenet_fullnih",
+    "finding": "edema",
+    "n_pos": 444,
+    "auroc_A": 0.851,
+    "A_lo": 0.831,
+    "A_hi": 0.871,
+    "auroc_B": 0.863,
+    "B_lo": 0.846,
+    "B_hi": 0.882,
+    "diff_B_minus_A": 0.013,
+    "diff_lo": 0.007,
+    "diff_hi": 0.019,
+    "verdict": "B better"
+   },
+   {
+    "A_folder": "artifacts_v1_imagenet_frozen",
+    "B_folder": "artifacts_v2_imagenet_fullnih",
+    "finding": "effusion",
+    "n_pos": 2819,
+    "auroc_A": 0.823,
+    "A_lo": 0.81,
+    "A_hi": 0.834,
+    "auroc_B": 0.836,
+    "B_lo": 0.824,
+    "B_hi": 0.847,
+    "diff_B_minus_A": 0.013,
+    "diff_lo": 0.01,
+    "diff_hi": 0.017,
+    "verdict": "B better"
+   },
+   {
+    "A_folder": "artifacts_v1_imagenet_frozen",
+    "B_folder": "artifacts_v2_imagenet_fullnih",
+    "finding": "pneumonia",
+    "n_pos": 262,
+    "auroc_A": 0.647,
+    "A_lo": 0.614,
+    "A_hi": 0.686,
+    "auroc_B": 0.687,
+    "B_lo": 0.649,
+    "B_hi": 0.722,
+    "diff_B_minus_A": 0.039,
+    "diff_lo": 0.018,
+    "diff_hi": 0.059,
+    "verdict": "B better"
+   },
+   {
+    "A_folder": "artifacts_v1_imagenet_frozen",
+    "B_folder": "artifacts_v2_imagenet_fullnih",
+    "finding": "pneumothorax",
+    "n_pos": 1004,
+    "auroc_A": 0.819,
+    "A_lo": 0.795,
+    "A_hi": 0.842,
+    "auroc_B": 0.839,
+    "B_lo": 0.816,
+    "B_hi": 0.859,
+    "diff_B_minus_A": 0.02,
+    "diff_lo": 0.009,
+    "diff_hi": 0.031,
+    "verdict": "B better"
+   },
+   {
+    "A_folder": "artifacts_v1_imagenet_frozen",
+    "B_folder": "artifacts_v2_imagenet_fullnih",
+    "finding": "ANY_URGENT",
+    "n_pos": 4659,
+    "auroc_A": 0.801,
+    "A_lo": 0.79,
+    "A_hi": 0.812,
+    "auroc_B": 0.811,
+    "B_lo": 0.8,
+    "B_hi": 0.821,
+    "diff_B_minus_A": 0.01,
+    "diff_lo": 0.007,
+    "diff_hi": 0.013,
+    "verdict": "B better"
+   }
+  ]
+ }
+}

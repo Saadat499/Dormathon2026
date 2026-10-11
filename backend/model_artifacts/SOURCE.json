@@ -1,0 +1,105 @@
+{
+ "data": "real",
+ "built_at": "2026-10-11T00:57:40Z",
+ "built_by": "backend/scripts/build_model_artifacts.py",
+ "model_version": "partA-0.1.0+4ca280b3cd",
+ "artifacts_folder": "artifacts_v2_imagenet_fullnih",
+ "frozen_at": "2026-10-10T18:02:44+00:00",
+ "dataset": "NIH ChestX-ray14 (public), patient-level splits by Member A",
+ "findings": [
+  "atelectasis",
+  "cardiomegaly",
+  "consolidation",
+  "edema",
+  "effusion",
+  "pneumonia",
+  "pneumothorax"
+ ],
+ "urgent": [
+  "pneumothorax",
+  "effusion",
+  "edema",
+  "consolidation",
+  "pneumonia"
+ ],
+ "selection": {
+  "chosen": "artifacts_v2_imagenet_fullnih",
+  "why": "Member A's README names it the frozen model. Its MANIFEST checksums match the files, its model_version is reproduced from backbone.json + head.npz + policy.json, policy.json was fitted for this head.npz, and every prediction row carries this version. On the same 21,845 held-out NIH test images it beats v1 on every finding.",
+  "rejected": {
+   "artifacts_v1_imagenet_frozen": "same backbone, head trained on a 30,000-image subset; lower AUROC on every finding",
+   "artifacts": "intermediate working copy, identical to v1 (same model_version); not used by any report"
+  },
+  "any_urgent_auroc_v1": 0.801,
+  "any_urgent_auroc_v2": 0.811,
+  "paired_difference": [
+   0.01,
+   0.007,
+   0.013
+  ]
+ },
+ "verification": {
+  "deploy_file_checksums_match_manifest": {
+   "backbone.json": true,
+   "head.npz": true,
+   "policy.json": true,
+   "ood.joblib": true,
+   "backbone_densenet121-onnx.onnx": true
+  },
+  "runtime_files_identical_to_repo_ml_folder": {
+   "backbone.json": true,
+   "backbone_densenet121-onnx.onnx": true,
+   "head.npz": true,
+   "policy.json": true,
+   "ood.joblib": true,
+   "drift_reference.npy": true
+  },
+  "policy_matches_manifest": true,
+  "policy_fitted_for_this_head": true,
+  "composite_is_max_urgent_probability": true,
+  "demo_images_rescored": 59,
+  "max_abs_difference_live_vs_saved_probability": 0.0,
+  "ood_flags_match_saved": true,
+  "runtime": {
+   "python": "3.13.15",
+   "numpy": "2.3.4"
+  }
+ },
+ "splits": {
+  "reference": "val",
+  "report": "test",
+  "val_rows": 11341,
+  "test_rows": 21845,
+  "val_urgent": 2307,
+  "test_urgent": 4659,
+  "rule": "thresholds and the sensitivity floor use the validation split only; the test split is reported, never tuned on"
+ },
+ "default_threshold": {
+  "target": 0.9,
+  "value": 0.4,
+  "score_cutoff": 0.04765,
+  "b_selected_score_threshold": 0.05,
+  "method": "Member B's select_threshold_at_sensitivity on the validation split, snapped down to the 0.01 percentile grid"
+ },
+ "demo": {
+  "studies": 59,
+  "seeded": 12,
+  "chexpert_included": false,
+  "seed_selection": "12 demo images chosen so that raised, unsure, normal and out-of-distribution scans are all visible at the default threshold; not a performance sample"
+ },
+ "runtime_files": {
+  "backbone.json": "2639dc4b0a679c1d47213a1f1e18e1093482f56a3fb54c774815cc58ae42ba1a",
+  "backbone_densenet121-onnx.onnx": "3cfeedd40a0bef074eb9650a5c988c7e7c4c43b1ad1127dd33dbe6f72887c34c",
+  "head.npz": "2d8c24a53f06e910044b890793ebe351fe8c3879e309725170237750a452d6f6",
+  "policy.json": "02cb9e0b25e2dd4183f13f6db00804e86c7123c5e06c695051610e531b665425",
+  "ood.joblib": "a295167eb76fda9c9754541201c8cb5cdaabe503a955aa774323088da3d7b812",
+  "drift_reference.npy": "562be71ece92621951eea9f3f106da7a858b45b0682c45dd0ea3755cc347ed82"
+ },
+ "runtime_base_url": "https://raw.githubusercontent.com/Saadat499/Dormathon2026/5ff63982734a4051c6d349868799f820ea56405f/ml/artifacts_v2_imagenet_fullnih/",
+ "committed_files": {
+  "MANIFEST.json": "34a9fdb69a1c1155a944e1145f95b93b167790fc1fbf51acd502f6d637da9c90",
+  "saved_predictions_nih.csv.gz": "39b1dfe1d53b64a970650c32ae683db4d4e4a1d8f8a7192490a3fa120a38018b",
+  "evidence.json": "85082736acc57024e3ac263e53c67a00f2953fb2b2e6599433432092ecc48245",
+  "demo/demo_studies.json": "711a076a8bbc2d432d300a38ac4977fc17a999dd93d840f0d46bc74afc34c380"
+ },
+ "licence_note": "NIH ChestX-ray14 images and labels are public (NIH Clinical Center; cite Wang et al. 2017). CheXpert rows and images are excluded: its research-use agreement forbids redistribution."
+}
